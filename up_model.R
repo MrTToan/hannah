@@ -19,6 +19,7 @@ head(query_results)
 
 query_results[is.na(query_results)] <- 0
 
+library(dplyr)
 corr_data <- query_results %>%
   select(-c(deviceID, user_label, type_, check_s)) 
   
@@ -30,9 +31,8 @@ library(corrplot)
 corrplot(res, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
-
-library(dplyr)
 str(query_results)
+
 clean_data <- query_results %>%
   select(-c(deviceID, phieu_dat_coc_cate, fixed_price, freegift, seller)) %>% 
   #Convert to factor level

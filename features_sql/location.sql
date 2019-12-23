@@ -1,5 +1,5 @@
 #standardSQL 
-CREATE OR REPLACE TABLE as `tiki-dwh.consumer_product.feature_location` as
+CREATE OR REPLACE TABLE `tiki-dwh.consumer_product.feature_location` as
 with location as (
 select event_date,
                 event_timestamp,

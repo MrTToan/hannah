@@ -39,7 +39,7 @@ pdp as (
 select a.*, dp.tier_price, dp.productset_name, dp.cate1, dp.cate2, dp.sub_cate_report
 from app_spid a 
 left join `tiki-dwh.dwh.dim_product_full` dp on a.spid = cast(dp.product_key as string)
-group by 1, 2, 3, 4, 5 ,6, 7, 8, 9, 10,11
+group by 1, 2, 3, 4, 5 ,6, 7, 8, 9, 10
 
 union all 
 

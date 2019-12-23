@@ -1,4 +1,4 @@
-
+CREATE OR REPLACE TABLE `tiki-dwh.consumer_product.feature_cate_view_1511` as 
 select date, deviceID
                 ,countif(cate1 is null) as null_cate
                 ,countif(cate1 like ('Ô Tô - Xe Máy - Xe Đạp%')) as transportation_cate
@@ -21,5 +21,5 @@ select date, deviceID
                 ,countif(cate1 like ('Recycle Bin%')) as recycle_bin_cate
                 ,countif(cate1 like ('Điện Gia Dụng%')) as electric_appliances_cate
                 ,countif(cate1 like ('Chương Trình Khuyến Mãi%')) as promotion_cate
-from `consumer_product.feature_pdp`
+from `consumer_product.feature_pdp_1511`
 group by 1, 2

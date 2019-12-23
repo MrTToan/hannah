@@ -1,5 +1,5 @@
 #standardSQL
-CREATE OR REPLACE TABLE `tiki-dwh.consumer_product.feature_coupon` as 
+CREATE OR REPLACE TABLE `tiki-dwh.consumer_product.feature_coupon_1511` as 
 with coupon_raw as (
 select  event_date as date
                 , event_timestamp
