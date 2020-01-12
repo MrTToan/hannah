@@ -90,3 +90,5 @@ AND min_access_date < date(2019,11,01)
 WHERE 1=1
 AND sum_search > 0
 )
+
+-- test
