@@ -1,5 +1,5 @@
 #up_user_label
-CREATE OR REPLACE TABLE consumer_product.up_user_label_v3 AS
+CREATE OR REPLACE TABLE consumer_product.up_user_label_test2 AS
 (
 WITH purchase_summary AS 
    (
@@ -53,7 +53,7 @@ WITH purchase_summary AS
              FROM `tiki-dwh.dwh.fact_sales_order_nmv` T1
                LEFT JOIN `tiki-dwh.dwh.dim_platform` T2 ON T1.platform_key = T2.platform_key
                LEFT JOIN `tiki-dwh.dwh.dim_product_full` T3 ON T1.product_key = T3.product_key
-               LEFT JOIN `ecom.customer` T4 ON T1.customer_key = T4.backend_id
+               LEFT JOIN `tiki-dwh.ecom.customer` T4 ON T1.customer_key = T4.backend_id
              WHERE 1=1
              AND date(T1.date_at) <= date(2019,11,15)
          )
@@ -95,9 +95,9 @@ WITH purchase_summary AS
           user_id, 
           min(DATETIME(TIMESTAMP_MICROS(event_timestamp),'Asia/Bangkok')) min_device_date,
           max(DATETIME(TIMESTAMP_MICROS(event_timestamp),'Asia/Bangkok')) max_device_date 
-        FROM `tikiandroid-1047.analytics_153801291.events_20*`
+        FROM `tikiandroid-1047.data_log.events_new`
          WHERE 1=1
-          AND _TABLE_SUFFIX >= '190101'
+          AND event_date >= date_sub(current_date('+7'), interval 6 month)
         GROUP BY 1,2
         
         UNION ALL
@@ -118,7 +118,7 @@ WITH purchase_summary AS
          FROM `tiki-gap.129159136.ga_sessions_20*`,
               UNNEST(hits) AS hits
          WHERE 1=1
-             AND _TABLE_SUFFIX >= '190101'
+             AND _TABLE_SUFFIX = format_date("%y%m%d", '{{macros.localtz.ds_nodash(ti)}}')
         )
         WHERE 1=1
         AND dataSource <> 'app'
