@@ -7,13 +7,12 @@ from scipy import stats
 import numpy as np
 import pandas as pd
 import pandas_gbq
+import os
     
-def get_data(table_name):
-    sql = """
-            SELECT * FROM {}
-            """.format(table_name)
-    
-    df = pandas_gbq.read_gbq(sql, project_id='tiki-dwh')
+def get_data(file_name):
+    filename = os.path.join(os.getcwd(),'pipeline/{}'.format(file_name))
+    with open(filename, 'r') as f:
+        df = pd.read_csv(f) 
     return df
 
 def split_data(dataset):
@@ -86,7 +85,7 @@ process_pl = Pipeline(memory=None, steps=[
 ], verbose=True)
 
 
-raw = get_data('consumer_product.up_user_summary_test_pipeline')
+raw = get_data('train.csv')
 processing_data = process_pl.fit(raw)
 X_train, X_test, y_train, y_test = split_data(raw)
 model = XGBClassifier(max_depth=9, n_estimators=100)
