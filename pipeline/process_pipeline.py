@@ -2,6 +2,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import FeatureUnion, Pipeline
 from  sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 from xgboost import XGBClassifier
 from scipy import stats
 import numpy as np
@@ -85,10 +86,7 @@ process_pl = Pipeline(memory=None, steps=[
 ], verbose=True)
 
 
-raw = get_data('train.csv')
-processing_data = process_pl.fit(raw)
-X_train, X_test, y_train, y_test = split_data(raw)
-model = XGBClassifier(max_depth=9, n_estimators=100)
-model.fit(X_train, y_train)
-print(model.score(X_test, y_test))
+
+
+
 
