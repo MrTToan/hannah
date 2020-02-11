@@ -1,0 +1,33 @@
+version: 1
+
+config:
+    slack_notify: true
+    slack_channel: 'vision-ci'
+    dev_branch_name: dev
+
+jobs:
+    build_docker:
+        steps:
+            - build_image
+
+    publish_docker:
+        steps:
+            - push_image
+
+
+
+workflows:
+    jenkins_pipeline:
+        jobs:
+            - build_docker
+            - publish_docker:
+                requires:
+                    - build_docker
+                filters:
+                    branches:
+                        only:
+                            - master
+                            - dev
+                            - staging
+
+
