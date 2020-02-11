@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r ./requirements.txt
 
 RUN chown -R "${APP_USER}":"${APP_GRP}" "${APP_HOME}"
 
-WORDIR $APP_HOME
+WORKDIR $APP_HOME
