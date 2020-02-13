@@ -1,7 +1,13 @@
 from process_pipeline import process_pl
+from google.oauth2 import service_account
+
 import pandas_gbq
 import pickle
 import argparse
+
+credentials = service_account.Credentials.from_service_account_file(
+    './pipeline/credentials.json',
+)
 
 parser = argparse.ArgumentParser(description='get running date')
 parser.add_argument("running_date", help="running date")
@@ -14,7 +20,7 @@ def predict(_day=args.running_date):
                 from `tiki-dwh.consumer_product.cs_user_summary_{}` c 
                 left join `tiki-dwh.consumer_product.cs_user_label` a on c.deviceID = a.deviceID
     """.format(_day)
-    predicted_set = pandas_gbq.read_gbq(sql, project_id = 'tiki-dwh')
+    predicted_set = pandas_gbq.read_gbq(sql, project_id = 'tiki-dwh', credentials=credentials)
     processed_predicted_set = process_pl.fit_transform(predicted_set)
     with open('customer_segmentation_model.sav', 'rb') as f:
         model = pickle.load(f)

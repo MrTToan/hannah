@@ -1,4 +1,4 @@
-FROM tikivn/python:3.6
+FROM python:3.6
 
 RUN apt-get update \
     && apt-get install -qq --no-install-recommends -y \
@@ -6,10 +6,10 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD . "${APP_HOME}"
-
-RUN pip install --no-cache-dir -r ./requirements.txt
-
-RUN chown -R "${APP_USER}":"${APP_GRP}" "${APP_HOME}"
+ENV APP_HOME /tiki/hannah
 
 WORKDIR $APP_HOME
+
+ADD . "${APP_HOME}"
+ENV PYTHONPATH=$APP_HOME
+RUN pip install --no-cache-dir -r ./requirements.txt
