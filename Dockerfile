@@ -8,8 +8,10 @@ RUN apt-get update \
 
 ENV APP_HOME /tiki/hannah
 
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
 WORKDIR $APP_HOME
 
 ADD . "${APP_HOME}"
 ENV PYTHONPATH=$APP_HOME
-RUN pip install --no-cache-dir -r ./requirements.txt
