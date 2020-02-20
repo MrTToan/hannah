@@ -46,4 +46,4 @@ def set_customers_segment(device_ids, customer_segments):
     result = grequests.map(rs, size=5)
     print(result[0].text)
 # 
-set_customers_segment(['08817404-0621-4396-bd6b-753f2699343e', 'f0f6b7a8-fd4b-41db-9b30-0e51f1170530'], ['tui', 'tui'])
+set_customers_segment(['3c2a80b0-8a31-4760-a32e-b7a88bd3ace1'], ['good_customer'])
