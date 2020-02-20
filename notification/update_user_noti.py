@@ -35,7 +35,7 @@ def set_customers_segment(device_ids, customer_segments):
                     } for customer_id, customer_segment in zip(customer_id_chunk, customer_segment_chunk)
                 ]}
             data = json.dumps(data)
-            print(data)
+            # print(data) 
             r = grequests.post(set_user_attribute_bulk_api
                                     , auth=HTTPBasicAuth(key, pwd)
                                     , data=data
@@ -72,6 +72,5 @@ if __name__ == '__main__':
     parser.add_argument("running_date", help="running date")
     args = parser.parse_args()
     good_customer, bad_customer = get_customers(args.running_date)
-    # print(good_customer)
     set_customers_segment(good_customer, ['good_customer']*len(good_customer))
     set_customers_segment(bad_customer, ['bad_customer']*len(bad_customer))
