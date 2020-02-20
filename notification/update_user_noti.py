@@ -1,7 +1,10 @@
 import argparse
 import json
-import requests
 
+import gevent.monkey
+gevent.monkey.patch_all()
+
+import requests
 import grequests
 import pandas_gbq
 from requests.auth import HTTPBasicAuth
@@ -25,7 +28,7 @@ def set_customers_segment(device_ids, customer_segments):
 
         for i in range(0, len(device_ids), max_per_call):
             customer_id_chunk = device_ids[i:i+max_per_call]
-            print(customer_id_chunk)
+            # print(customer_id_chunk)
             customer_segment_chunk = customer_segments[i:i+max_per_call]
 
             data ={"customers":
