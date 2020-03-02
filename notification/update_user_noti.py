@@ -75,5 +75,5 @@ if __name__ == '__main__':
     parser.add_argument("running_date", help="running date")
     args = parser.parse_args()
     good_customer, bad_customer = get_customers(args.running_date)
-    set_customers_segment(good_customer, ['good_customer']*len(good_customer))
-    set_customers_segment(bad_customer, ['bad_customer']*len(bad_customer))
+    set_customers_segment(good_customer, ['stage1_good_customer']*len(good_customer))
+    set_customers_segment(bad_customer, ['stage1_bad_customer']*len(bad_customer))
