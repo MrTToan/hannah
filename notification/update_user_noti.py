@@ -51,29 +51,38 @@ def set_customers_segment(device_ids, customer_segments):
 
 
 def get_customers(running_date):
-    sql_good = """
+    sql_high = """
+        select device_id
+        from `tiki-dwh.consumer_product.cs_send_list_{}`
+        where _group = 2
+        and device_id is not null
+    """.format(running_date)
+
+    sql_medium = """
         select device_id
         from `tiki-dwh.consumer_product.cs_send_list_{}`
         where _group = 1
         and device_id is not null
     """.format(running_date)
 
-    sql_bad = """
+    sql_low = """
         select device_id
         from `tiki-dwh.consumer_product.cs_send_list_{}`
         where _group = 0
         and device_id is not null
     """.format(running_date)
 
-    good_customer = pandas_gbq.read_gbq(sql_good, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
-    bad_customer = pandas_gbq.read_gbq(sql_bad, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
-    return good_customer, bad_customer
+    high_customer = pandas_gbq.read_gbq(sql_high, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
+    medium_customer = pandas_gbq.read_gbq(sql_medium, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
+    low_customer = pandas_gbq.read_gbq(sql_bad, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
+    return high_customer, medium_customer, low_customer
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='get running date')
     parser.add_argument("running_date", help="running date")
     args = parser.parse_args()
-    good_customer, bad_customer = get_customers(args.running_date)
-    set_customers_segment(good_customer, ['stage1_good_customer']*len(good_customer))
-    set_customers_segment(bad_customer, ['stage1_bad_customer']*len(bad_customer))
+    high_customer, medium_customer, low_customer = get_customers(args.running_date)
+    set_customers_segment(high_customer, ['stage2_high_customer']*len(good_customer))
+    set_customers_segment(medium_customer, ['stage2_medium_customer']*len(good_customer))
+    set_customers_segment(low_customer, ['stage2_low_customer']*len(bad_customer))
