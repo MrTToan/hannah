@@ -74,7 +74,7 @@ def get_customers(running_date):
 
     high_customer = pandas_gbq.read_gbq(sql_high, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
     medium_customer = pandas_gbq.read_gbq(sql_medium, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
-    low_customer = pandas_gbq.read_gbq(sql_bad, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
+    low_customer = pandas_gbq.read_gbq(sql_low, project_id='tiki-dwh', credentials=credentials)['device_id'].values.tolist()
     return high_customer, medium_customer, low_customer
 
 
