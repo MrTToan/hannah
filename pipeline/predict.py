@@ -34,5 +34,6 @@ def predict(_day=args.running_date):
     table = 'consumer_product.cs_prediction_{}'.format(_day)
     pandas_gbq.to_gbq(predicted_set, table, project_id = 'tiki-dwh', if_exists='replace')
 
+# special method
 if __name__ == "__main__":
     predict()
